@@ -1,0 +1,26 @@
+/////////////////////////////////////////////////
+// Snippets config
+/////////////////////////////////////////////////
+
+// Snippets features (set true to include and false to exclude)
+$snippets_feature_viewport-visibility: true;
+$snippets_feature_class-indentation: false;
+
+// Viewport visibility breakpoints
+$viewport-visibility_breakpoints: (
+  xs: '(max-width: ' #{map-get($viewport_breakpoints_max, xs)} ')',
+  sm: '(min-width: ' #{map-get($viewport_breakpoints, sm)} ') and (max-width: ' #{map-get($viewport_breakpoints_max, sm)} ')',
+  md: '(min-width: ' #{map-get($viewport_breakpoints, md)} ')'
+);
+
+// Class indentation's values
+$indent_map: (
+  mc: $indent-mc,
+  xs: $indent-xs,
+  sm: $indent-sm,
+  md: $indent-md,
+  lg: $indent-lg,
+  xl: $indent-xl,
+  gn: $indent-gn,
+  hg: $indent-hg
+);

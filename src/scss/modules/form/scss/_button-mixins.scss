@@ -1,0 +1,101 @@
+/////////////////////////////////////////////////
+// Button mixins
+/////////////////////////////////////////////////
+
+// Basic button styles
+/////////////////////////////////////////////////
+@mixin ns_button_common($height, $padding, $font-size, $line-height, $border-width, $border-radius, $font-weight, $text-align, $background, $border-color, $color) {
+  // default styles
+  display: inline-block;
+  margin: 0;
+  background-image: none;
+  border-style: solid;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+
+  // size styles
+  @include ns_input_size($height, $padding, $font-size, $line-height, $border-width, $border-radius); 
+  
+  // text styles
+  @if $font-weight {
+    font-weight: $font-weight;
+  }
+  text-align: $text-align;
+
+  // color styles
+  color: $color;
+  @if $background {
+    background-color: $background;
+  }
+  @if $border-color {
+    border-color: $border-color;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      cursor: not-allowed;
+      background-color: $background;
+      @include opacity(.65);
+    }
+  }
+}
+
+// Default button mixin
+/////////////////////////////////////////////////
+@mixin ns_button($height: $inputs_height, $padding: $inputs_padding-horizontal, $font-size: $button_font-size, $line-height: $button_font-size, $border-width: $button_border-width, $border-radius: $button_border-radius, $font-weight: null, $text-align: center, $background: $inputs_color_primary, $border-color: null, $color: $inputs_color_button-text) {
+  @include ns_button_common($height, $padding, $font-size, $line-height, $border-width, $border-radius, $font-weight, $text-align, $background, $border-color, $color);
+
+  &:hover,
+  &:focus {
+    @if function-exists(ns_hover) {
+      background-color: ns_hover($background);
+    } @else {
+      background-color: lighten($background, 10%);
+    }
+    color: $color;
+  }
+
+  &:active,
+  &.active {
+    background-color: darken($background, 10%);
+  }
+}
+
+// Outline button mixin
+/////////////////////////////////////////////////
+@mixin ns_button-outline($height: $inputs_height, $padding: $inputs_padding-horizontal, $font-size: $button_font-size, $line-height: $button_font-size, $border-width: $button_outline_border-width, $border-radius: $button_border-radius, $font-weight: null, $text-align: center, $background: transparent, $border-color: $inputs_color_primary, $color: $inputs_color_foreground) {
+  @include ns_button_common($height, $padding, $font-size, $line-height, $border-width, $border-radius, $font-weight, $text-align, $background, $border-color, $color);
+
+  &:hover,
+  &:focus {
+    @if function-exists(ns_inverted) {
+      color: ns_inverted($color, $border-color);
+    } @else {
+      color: #fff;
+    }
+    background: $border-color;
+  }
+
+  &:active,
+  &.active {
+    @if function-exists(ns_inverted) {
+      color: ns_inverted($color, $border-color);
+    } @else {
+      color: #fff;
+    }
+    background: darken($border-color, 10%);
+  }
+}
+

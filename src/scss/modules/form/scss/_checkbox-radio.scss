@@ -1,0 +1,78 @@
+/*********************************************** 
+  Checkbox and radio
+***********************************************/
+
+// Mixins
+/////////////////////////////////////////////////
+@import 'checkbox-radio-mixins';
+
+/* Default checkbox and radio
+***********************************************/
+@if ($checkbox_default == true) {
+  .checkbox,
+  .radio {
+    display: block;
+
+    & + .checkbox,
+    & + .radio, 
+    & + .checkbox-filled,
+    & + .radio-filled {
+      margin-top: $unit * 2;
+    }
+  }
+
+  .checkbox {
+    @include ns_checkbox();
+  }
+
+  .radio {
+    @include ns_radio();
+  }
+}
+
+/* Filled when checked checkbox and radio
+***********************************************/
+@if ($checkbox_filled == true) {
+  .checkbox-filled,
+  .radio-filled {
+    display: block;
+
+    & + .checkbox,
+    & + .radio, 
+    & + .checkbox-filled,
+    & + .radio-filled {
+      margin-top: $unit * 2;
+    }
+  }
+
+  .checkbox-filled {
+    @include ns_checkbox-filled();
+  }
+
+  .radio-filled {
+    @include ns_radio-filled();
+  }
+}
+
+/* Checkbox modifiers
+***********************************************/
+
+/* Make checkbox and radio group to be an inline block */
+.checkbox--inline,
+.radio--inline {
+  display: inline-block;
+  margin: 0 $unit * 3 0 0;
+
+  & + .checkbox,
+  & + .radio, 
+  & + .checkbox-filled,
+  & + .radio-filled {
+    margin-top: 0;
+  }
+}
+
+
+
+
+
+

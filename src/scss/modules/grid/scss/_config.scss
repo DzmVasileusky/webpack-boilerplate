@@ -1,0 +1,26 @@
+/////////////////////////////////////////////////
+// Grid config
+/////////////////////////////////////////////////
+
+// Grid features (set true to include and false to exclude)
+$grid_feature_responsive: true;
+$grid_feature_offset: true;
+$grid_feature_columns-order: true;
+$grid_feature_row--collapsed: true;
+$grid_feature_different-gutters: true;
+$grid_feature_vertical-gutters: true;
+$grid_feature_horizontal-alignment: true;
+$grid_feature_vertical-alignment: true;
+
+// Grid settings
+$grid_cols: 12;
+$grid_gutter: 6 * $unit;
+$grid_gutters: (
+  0: 0,
+  3u: 3 * $unit,
+  6u: 6 * $unit,
+  9u: 9 * $unit,
+  12u: 12 * $unit,
+  15u: 15 * $unit,
+  18u: 18 * $unit
+);

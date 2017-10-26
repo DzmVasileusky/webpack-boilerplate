@@ -1,0 +1,15 @@
+/////////////////////////////////////////////////
+// Form mixins
+/////////////////////////////////////////////////
+
+// Set input size
+/////////////////////////////////////////////////
+@mixin ns_input_size($height, $padding-horizontal, $font-size, $line-height, $border-width, $border-radius) {
+  padding: ($height - $line-height - $border-width*2)/2 $padding-horizontal;
+  line-height: $line-height;
+  height: $height;
+  font-size: $font-size;
+  border-width: $border-width;
+  border-radius: $border-radius;
+}
+

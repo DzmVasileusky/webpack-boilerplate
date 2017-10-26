@@ -1,0 +1,70 @@
+/////////////////////////////////////////////////
+// Global config
+/////////////////////////////////////////////////
+
+// Interface grid and base sizes
+/////////////////////////////////////////////////
+$unit: 4px;
+$base_font-size: 1.6rem;
+$base_line-height: 1.5;
+$base_font-family: 'Open Sans', 'Helvetica', 'Verdana', 'Arial', sans-serif;
+
+// Indentetions set
+/////////////////////////////////////////////////
+$indent_mc: $unit;
+$indent_xs: 3 * $unit;
+$indent_sm: 6 * $unit;
+$indent_md: 9 * $unit;
+$indent_lg: 12 * $unit;
+$indent_xl: 15 * $unit;
+$indent_gn: 18 * $unit;
+$indent_hg: 30 * $unit;
+
+// Color config
+/////////////////////////////////////////////////
+$color_bg: #fff; // base theme background color
+$color_text: #0d0d0d; // contrast to base theme background color for text
+$color_brand: #ff981a; // special brand theme color   
+// $color_brand2: #ff981a; // special brand theme color 2
+$color_additional: (
+  success: #3DCC80,
+  error: #E21F1E
+);
+
+// Media queries breakpoint
+/////////////////////////////////////////////////
+
+// microscopic devices
+$viewport_mc: 0;
+$viewport_sm-phone: $viewport_mc;
+
+// extra small devices
+$viewport_xs: 480px;
+$viewport_phone: $viewport_xs;
+
+// small devices
+$viewport_sm: 600px;
+$viewport_tablet: $viewport_sm;
+
+// medium devices
+$viewport_md: 992px;
+$viewport_desktop: $viewport_md;
+
+// large devices
+$viewport_lg: 1280px;
+$viewport_lg-desktop: $viewport_lg;
+
+$viewport_breakpoints: (
+  mc: $viewport_mc,
+  xs: $viewport_xs,
+  sm: $viewport_sm,
+  md: $viewport_md,
+  lg: $viewport_lg
+);
+$viewport_breakpoints_max: (
+  mc: $viewport_xs - 1,
+  xs: $viewport_sm - 1,
+  sm: $viewport_md - 1,
+  md: $viewport_lg - 1,
+  lg: false
+);

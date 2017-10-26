@@ -1,0 +1,115 @@
+/*********************************************** 
+  Buttons
+***********************************************/
+
+// Mixins
+/////////////////////////////////////////////////
+@import 'button-mixins';
+
+/* Flat buttons
+***********************************************/
+@if ($button_default == true) {
+  .button {
+    @include ns_button();
+  }
+
+  @each $name, $color in $inputs_color_additional {
+    .button-#{$name} {
+      @include ns_button($background: $color);
+    }
+  }
+}
+
+/* Outline buttons
+***********************************************/
+@if ($button_outline == true) {
+  /* Default outline buttons */
+
+  .button-outline {
+    @include ns_button-outline();
+  }
+
+  @each $name, $color in $inputs_color_additional {
+    .button-outline-#{$name} {
+      @include ns_button-outline($border-color: $color);
+    }
+  }
+}
+
+/* Button modifiers
+***********************************************/
+
+/* Make button to be a block */
+.button--block {
+  display: block;
+}
+
+/* Button groups
+***********************************************/
+@if ($button_group == true) {
+  .button-group {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+
+    @include clearfix;
+
+    > [class *= 'button'] {
+      float: left;
+
+    }
+
+    > [class *= 'button']:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+
+    > [class *= 'button']:first-child {
+      &:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+    }
+
+    > [class *= 'button']:last-child {
+      &:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+
+    > [class *= 'button'] + [class *= 'button'] {
+      border-left: 0;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,298 @@
+/////////////////////////////////////////////////
+// Checkbox and radio mixins
+/////////////////////////////////////////////////
+
+// Add common checkbox and radio styles
+@mixin ns_checkbox-radio_common($type, $size, $font-size, $line-height, $border-width) {
+  
+  // ie8 style
+  .ie8 & {
+
+    position: relative;
+    padding-left: 20px;
+
+    input {
+      position: absolute;
+      top: round( ($font-size * $line-height / 2 - .7rem) * 10) / 10;
+      left: 0;
+    }
+
+    input + span {
+      font-size: $font-size;
+      line-height: $line-height;
+    }
+
+    @each $name, $color in $inputs_color_additional {
+      &.#{$name} input + span,
+      .#{$name} & input + span,
+      & input.#{$name} + span {
+        color: $color;
+      }
+    }
+  }
+
+  // modern style
+  html:not(.ie8) & {
+
+    $label_height: $font-size * $line-height;
+
+    min-height: $size;
+    padding-left: $size * 1.5;
+    @if $size > $label_height {
+      padding-top: ($size - $label_height) / 2;
+    }
+
+    input[type=#{$type}] {
+      position: absolute;
+      visibility: hidden;
+    }
+
+    input[type=#{$type}] + span {
+      cursor: pointer;
+      position: relative;
+      display: inline-block;
+      font-size: $font-size;
+      line-height: $line-height;
+    }
+
+    input[type=#{$type}] + span:before {
+      content: '';
+      display: block;
+      width: $size;
+      height: $size;
+      box-sizing: border-box;
+      position: absolute;
+      margin-top: ($label_height - $size) / 2;
+      left: - $size * 1.5;
+      border: $border-width solid;
+    }
+
+    input[type=#{$type}] + span:after {
+      content: '';
+      display: none;
+      position: absolute;
+    }
+
+    input[type=#{$type}]:checked + span:after {
+      display: block;
+    }
+    
+    &:hover {
+      input[type=#{$type}]:not(:checked) + span:after {
+        display: block;
+      }
+    }
+
+    &.disabled,
+    &.disabled input + span,
+    input[disabled] + span,
+    input.disabled + span {
+      cursor: not-allowed;
+    }
+
+    &.disabled input + span:before,
+    input[disabled] + span:before,
+    input.disabled + span:before,
+    &.disabled input + span:after,
+    input[disabled] + span:after,
+    input.disabled + span:after {
+      @include opacity(.45);
+    }
+
+    &:hover input[type=#{$type}][disabled]:not(:checked) + span:after,
+    &:hover input[type=#{$type}].disabled:not(:checked) + span:after,
+    &.disabled:hover input[type=#{$type}]:not(:checked) + span:after {
+      display: none;
+    }
+  }
+}
+
+// Add common checkbox styles
+
+// Default checkbox mixin
+/////////////////////////////////////////////////
+@mixin ns_checkbox($size: $checkbox_size, $font-size: $checkbox_font-size, $line-height: $checkbox_line-height, $border-width: $checkbox_border-width, $border-radius: $checkbox_border-radius, $background: $inputs_color_background, $border-color: $inputs_color_border, $inner-color: $inputs_color_primary) {
+
+  @include ns_checkbox-radio_common('checkbox', $size, $font-size, $line-height, $border-width); // add common styles
+
+  // invert background color if lightness difference is not enough
+  $background: ns_inverted($background, $inner-color, 80%, 50%);
+
+  $label_height: $font-size * $line-height;
+
+  html:not(.ie8) & {
+
+    input[type=checkbox] + span:before {
+      border-radius: $border-radius;
+      border-color: $border-color;
+    }
+
+    input[type=checkbox] + span:after {
+      width: $size * 0.4;
+      height: $size * 0.2;
+      top: $label_height / 2 - .2 * $size;
+      left: - 1.25 * $size;
+      transform-origin: center;
+      transform: rotate(-45deg);
+      border-bottom: $size * .15 solid $inner-color;
+      border-left: $size * .15 solid $inner-color;
+    }
+    
+    &:hover,
+    &:focus {
+      input[type=checkbox]:not(:checked) + span:after {
+        border-color: mix($inner-color, $background, 50%);
+      }
+    }
+  }
+
+  @each $name, $color in $inputs_color_additional {
+    html:not(.ie8) &.#{$name} input[type=checkbox],
+    html:not(.ie8) .#{$name} & input[type=checkbox],
+    html:not(.ie8) & input[type=checkbox].#{$name} {
+
+      & + span {
+
+        color: $color;
+
+        &:before {
+          border-color: $color;
+        }
+      }
+    }
+  }
+}
+
+// Filled checkbox mixin
+/////////////////////////////////////////////////
+@mixin ns_checkbox-filled($size: $checkbox_size, $font-size: $checkbox_font-size, $line-height: $checkbox_line-height, $border-width: $checkbox_border-width, $border-radius: $checkbox_border-radius, $background: $inputs_color_background, $border-color: $inputs_color_border, $inner-color: $inputs_color_primary) {
+
+  // invert background color if lightness difference is not enough
+  $background: ns_inverted($background, $inner-color, 80%, 50%);
+
+  @include ns_checkbox($size, $font-size, $line-height, $border-width, $border-radius, $background, $border-color, $inner-color); // add deault checkbox styles
+  
+  html:not(.ie8) & {
+
+    input[type=checkbox]:checked {
+      & + span:before {
+        background-color: $inner-color;
+        border-color: $inner-color;
+      }
+
+      & + span:after {
+        border-color: $background;
+      }
+    }
+  }
+
+  @each $name, $color in $inputs_color_additional {
+    html:not(.ie8) &.#{$name} input[type=checkbox],
+    html:not(.ie8) .#{$name} & input[type=checkbox],
+    html:not(.ie8) & input[type=checkbox].#{$name} {
+
+      &:checked + span {
+        &:before {
+          background-color: $color;
+          border-color: $color;
+        }
+      }
+    }
+  }
+}
+
+// Default radio mixin
+/////////////////////////////////////////////////
+@mixin ns_radio($size: $checkbox_size, $font-size: $checkbox_font-size, $line-height: $checkbox_line-height, $border-width: $checkbox_border-width, $border-radius: $checkbox_border-radius, $background: $inputs_color_background, $border-color: $inputs_color_border, $inner-color: $inputs_color_primary) {
+
+  @include ns_checkbox-radio_common('radio', $size, $font-size, $line-height, $border-width); // add common styles
+
+  // invert background color if lightness difference is not enough
+  $background: ns_inverted($background, $inner-color, 80%, 50%);
+
+  $label_height: $font-size * $line-height;
+
+  html:not(.ie8) & {
+    
+    input[type=radio] + span:before {
+      border-radius: 100%;
+      border-color: $border-color;
+    }
+
+    input[type=radio] + span:after {
+
+      $position_offset: round($size * 10 * .3) / 10;
+      $top: ($label_height - $size) / 2 + $position_offset;
+      $inner_size: $size - $position_offset * 2;
+
+      width: $inner_size;
+      height: $inner_size;
+
+      top: $top;
+      left: - $size * 1.5 + $position_offset;
+      border-radius: 100%;
+      background-color: $inner-color;
+    }
+
+    &:hover,
+    &:focus {
+      input[type=radio]:not(:checked) + span:after {
+        background-color: mix($inner-color, $background, 50%);
+      }
+    }
+  }
+
+  @each $name, $color in $inputs_color_additional {
+    html:not(.ie8) &.#{$name} input[type=radio],
+    html:not(.ie8) .#{$name} & input[type=radio],
+    html:not(.ie8) & input[type=radio].#{$name} {
+
+      & + span {
+
+        color: $color;
+
+        &:before {
+          border-color: $color;
+        }
+      }
+    }
+  }
+}
+
+// Filled radio mixin
+/////////////////////////////////////////////////
+@mixin ns_radio-filled($size: $checkbox_size, $font-size: $checkbox_font-size, $line-height: $checkbox_line-height, $border-width: $checkbox_border-width, $border-radius: $checkbox_border-radius, $background: $inputs_color_background, $border-color: $inputs_color_border, $inner-color: $inputs_color_primary) {
+
+  // invert background color if lightness difference is not enough
+  $background: ns_inverted($background, $inner-color, 80%, 50%);
+  
+  @include ns_radio($size, $font-size, $line-height, $border-width, $border-radius, $background, $border-color, $inner-color); // add deault radio styles
+  
+  html:not(.ie8) & {
+
+    input[type=radio]:checked {
+      & + span:before {
+        background-color: $inner-color;
+        border-color: $inner-color;
+      }
+
+      & + span:after {
+        background-color: $background;
+      }
+    }
+  }
+  
+  @each $name, $color in $inputs_color_additional {
+    html:not(.ie8) &.#{$name} input[type=radio],
+    html:not(.ie8) .#{$name} & input[type=radio],
+    html:not(.ie8) & input[type=radio].#{$name} {
+
+      &:checked + span {
+        &:before {
+          background-color: $color;
+          border-color: $color;
+        }
+      }
+    }
+  }
+}

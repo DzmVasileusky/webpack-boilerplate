@@ -1,0 +1,28 @@
+/*********************************************** 
+  Layout
+***********************************************/
+
+// Include local config
+/////////////////////////////////////////////////
+@import 'config';
+
+// Mixins
+/////////////////////////////////////////////////
+@import 'mixins';
+
+// Set default font size settings to use with rem
+/////////////////////////////////////////////////
+
+/* html and body
+***********************************************/
+html {
+  font-size: 10px;
+  font-family: $base_font-family;
+}
+
+body {
+  font-size: $base_font-size;
+  line-height: $base_line-height;
+  color: $color_text;
+  background: $color_bg;
+}

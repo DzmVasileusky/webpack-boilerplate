@@ -1,0 +1,375 @@
+/////////////////////////////////////////////////
+// Grid mixins
+/////////////////////////////////////////////////
+
+// Grid wrapper mixin
+/////////////////////////////////////////////////
+
+// Cteate grid
+@mixin ns_grid() {
+  box-sizing: border-box;
+  padding-right: $grid_gutter / 2; 
+  padding-left: $grid_gutter / 2;
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+// Row mixins
+/////////////////////////////////////////////////
+
+// Create row
+@mixin ns_row() {
+  margin-right: -$grid_gutter / 2; 
+  margin-left: -$grid_gutter / 2;
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+// Add collapse feature
+@mixin ns_row--collapse() {
+  margin-left: 0;
+  margin-right: 0;
+
+  > [class *= 'col-'] {
+    padding-left: 0;
+    padding-right: 0;
+  } 
+}
+
+// Add different gutter feature to row
+@mixin ns_row--gutter($gutter-width) {
+  margin-left: 0;
+  margin-right: 0;
+
+  > [class *= 'col-'] {
+    &:first-child {
+      padding-left: 0;
+      padding-right: $gutter-width * 2/3;
+    }
+
+    & + [class *= 'col-'] {
+      padding-left: $gutter-width * 1/3;
+      padding-right: $gutter-width * 1/3;
+    }
+
+    &:last-child {
+      padding-right: 0;
+      padding-left: $gutter-width * 2/3;
+    }
+  }
+}
+
+// Reset different gutter feature on row
+@mixin ns_row--gutter-reset() {
+  margin-right: -$grid_gutter / 2; 
+  margin-left: -$grid_gutter / 2;
+
+  > [class *= 'col-']:first-child,
+  > [class *= 'col-'] + [class *= 'col-'],
+  > [class *= 'col-']:last-child {
+    padding-right: $grid_gutter / 2; 
+    padding-left: $grid_gutter / 2;
+  }
+}
+
+// Add vertical gutter feature to row
+@mixin ns_row--vertical-gutter($gutter-width) {
+  > [class *= 'col-'] + [class *= 'col-'] {
+    margin-top: $gutter-width;
+  }
+}
+
+// Switch to flexbox / inline-block mode for alignment features
+@mixin ns_row--flexbox() {
+  display: flex;
+  flex-wrap: wrap;
+
+  > [class *= 'col-'] {
+    display: inline-block;
+    vertical-align: top;
+    float: none;
+  }
+
+  > [class *= 'col-'] + [class *= 'col-'] {
+    margin-left: -4px;
+  }
+
+  &:before, &:after {
+    display: none;
+  }
+}
+
+// Add centered row styles
+@mixin ns_row--centered($include-flexbox-mixin: true) {
+  @if ($include-flexbox-mixin == true) {
+    @include create_row--flexbox();
+  }
+  
+  justify-content: center;
+  text-align: center;
+}
+
+// Add justified row styles
+@mixin ns_row--justified($include-flexbox-mixin: true) {
+  @if ($include-flexbox-mixin == true) {
+    @include create_row--flexbox();
+  }
+  
+  justify-content: space-between;
+  text-align: justify;
+  line-height: 0;
+
+  &:after {
+    content:'';
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+// Add vertically aligned to top row styles
+@mixin ns_row--valign-top($include-flexbox-mixin: true) {
+  @if ($include-flexbox-mixin == true) {
+    @include create_row--flexbox();
+  }
+  
+  align-items: flex-start;
+
+  > [class *= 'col-'] {
+    vertical-align: top;
+  }
+}
+
+// Add vertically aligned to bottom row styles
+@mixin ns_row--valign-bottom($include-flexbox-mixin: true) {
+  @if ($include-flexbox-mixin == true) {
+    @include create_row--flexbox();
+  }
+
+  align-items: flex-end;
+
+  > [class *= 'col-'] {
+    vertical-align: bottom;
+  }
+}
+
+// Add vertically aligned to middle row styles
+@mixin ns_row--valign-middle($include-flexbox-mixin: true) {
+  @if ($include-flexbox-mixin == true) {
+    @include create_row--flexbox();
+  }
+
+  align-items: center;
+
+  > [class *= 'col-'] {
+    vertical-align: middle;
+  }
+}
+
+// Add vertically stretched row styles
+@mixin ns_row--valign-stretch($include-flexbox-mixin: true) {
+  @if ($include-flexbox-mixin == true) {
+    @include create_row--flexbox();
+  }
+
+  align-items: stretch;
+}
+
+// Column mixins
+/////////////////////////////////////////////////
+
+// Get columns selector
+@function get-cols-selector($for-breakpoint: '') {
+
+  $all-cols-selector: '';
+
+  @if $for-breakpoint == '' {
+    @each $breakpoint, $width in $viewport_breakpoints {
+      $cols: $grid_cols;
+      @while $cols > 0 {
+        @if $breakpoint == 'mc' and $cols == $grid_cols {
+          $all-cols-selector: $all-cols-selector + '.col-#{$cols}';
+        } @else if $breakpoint == 'mc' {
+          $all-cols-selector: $all-cols-selector + ', .col-#{$cols}';
+        } @else {
+          $all-cols-selector: $all-cols-selector + ', .#{$breakpoint}_col-#{$cols}';
+        }
+        $cols: $cols - 1;
+      }
+    }
+  } @else {
+    $cols: $grid_cols;
+    @while $cols > 0 {
+      @if $for-breakpoint == 'mc' and $cols == $grid_cols {
+        $all-cols-selector: $all-cols-selector + '.col-#{$cols}';
+      } @else if $for-breakpoint == 'mc' {
+        $all-cols-selector: $all-cols-selector + ', .col-#{$cols}';
+      } @else if $cols == $grid_cols {
+        $all-cols-selector: $all-cols-selector + '.#{$for-breakpoint}_col-#{$cols}';
+      } @else {
+        $all-cols-selector: $all-cols-selector + ', .#{$for-breakpoint}_col-#{$cols}';
+      }
+      $cols: $cols - 1;
+    }
+  }
+
+  @return $all-cols-selector;
+}
+
+// Create all cols selector variable
+$all-cols-selector: get-cols-selector();
+
+// Add common column styles
+@mixin ns_col_styles($grid_gutter: $grid_gutter) {
+  position: relative;
+  padding-right: $grid_gutter / 2; 
+  padding-left: $grid_gutter / 2;
+  box-sizing: border-box;
+  min-height: 1px;
+}
+
+// Create column
+@mixin ns_col($cols, $breakpoint: 'mc', $include-col-mixin: true) {
+  @if ($include-col-mixin == true) {
+    @include add_col_styles();
+  }
+
+  @if $breakpoint == 'mc' {
+    width: percentage($cols / $grid_cols);
+    float: left;
+  } @else {
+    @media (min-width: #{map-get($viewport_breakpoints, $breakpoint)}) {
+      width: percentage($cols / $grid_cols);
+      float: left;
+    }
+  }
+}
+
+// Add column offset feature
+@mixin ns_col--offset($cols, $breakpoint: 'mc') {
+
+  @if $breakpoint == 'mc' {
+    margin-left: percentage($cols / $grid_cols);
+  } @else {
+    @media (min-width: #{map-get($viewport_breakpoints, $breakpoint)}) {
+      margin-left: percentage($cols / $grid_cols);
+    }
+  }
+}
+
+// Add move column to the right feature
+@mixin ns_col--right($cols, $breakpoint: 'mc') {
+
+  @if $breakpoint == 'mc' {
+    left: percentage($cols / $grid_cols);
+  } @else {
+    @media (min-width: #{map-get($viewport_breakpoints, $breakpoint)}) {
+      left: percentage($cols / $grid_cols);
+    }
+  }
+}
+
+// Add move column to the left feature
+@mixin ns_col--left($cols, $breakpoint: 'mc') {
+
+  @if $breakpoint == 'mc' {
+    right: percentage($cols / $grid_cols);
+  } @else {
+    @media (min-width: #{map-get($viewport_breakpoints, $breakpoint)}) {
+      right: percentage($cols / $grid_cols);
+    }
+  }
+}
+
+// Reset column order
+@mixin ns_col--reset-order($breakpoint: 'mc') {
+
+  @if $breakpoint == 'mc' {
+    right: auto;
+    left: auto;
+  } @else {
+    @media (min-width: #{map-get($viewport_breakpoints, $breakpoint)}) {
+      right: auto;
+      left: auto;
+    }
+  }
+}
+
+// Create colset
+@mixin ns_colset($breakpoint) {
+  $breakpoint-prefix: '';
+  @if $breakpoint != 'mc' {
+    $breakpoint-prefix: $breakpoint + '_';
+  }
+
+  $breakpoint-cols-selector: get-cols-selector($breakpoint);
+  #{$breakpoint-cols-selector} {
+    float: left;
+  }
+  
+  // create column set
+  $cols: $grid_cols;
+  @while $cols > 0 {
+    // create size in cols
+    .#{$breakpoint-prefix}col-#{$cols} { 
+      width: percentage($cols / $grid_cols); 
+    }
+  
+    // create offset in cols
+    @if $grid_feature_offset == true {
+      .#{$breakpoint-prefix}col--offset-#{$cols} {
+        margin-left: percentage($cols / $grid_cols);
+      }
+    }
+
+    // push column to the left or to the right
+    @if $grid_feature_columns-order == true {
+      .#{$breakpoint-prefix}col--right-#{$cols} {
+        left: percentage($cols / $grid_cols);
+      }
+      .#{$breakpoint-prefix}col--left-#{$cols} {
+        right: percentage($cols / $grid_cols);
+      }
+    }
+
+    $cols: $cols - 1;
+  }
+
+  // reset order
+  @if $grid_feature_columns-order == true {
+    .#{$breakpoint-prefix}col--reset-order {
+      right: auto;
+      left: auto;
+    }
+  }
+}
+
+// Create cols for breakpoint
+@mixin ns_cols-for-breakpoint($breakpoint, $breakpoint-width) {
+
+  // no media for the smallest devices
+  @if $breakpoint == 'mc' {
+    @include ns_colset($breakpoint);
+  } @else {
+    @if $grid_feature_responsive == true {
+      @media (min-width: $breakpoint-width) {
+        @include ns_colset($breakpoint);
+      }
+    }
+  }
+}

@@ -1,0 +1,134 @@
+/////////////////////////////////////////////////
+// Base common mixins and functions
+/////////////////////////////////////////////////
+
+// Clearfix mixin
+/////////////////////////////////////////////////
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+// Placeholder crossbrowser mixin
+/////////////////////////////////////////////////
+@mixin placeholder() {
+  &::-webkit-input-placeholder {  
+    @content;
+  } 
+  &:-moz-placeholder {  
+    @content;
+  } 
+  &::-moz-placeholder {
+    @content;
+  } 
+  &:-ms-input-placeholder { 
+    @content;
+  } 
+  &::input-placeholder, {   
+    @content;
+  }
+  &.placeholder { 
+    @content;
+  }
+}
+
+// Opacity crossbrowser mixin
+/////////////////////////////////////////////////
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  filter: alpha(opacity=$opacity * 100);
+}
+
+// Responsive appliance mixin
+/////////////////////////////////////////////////
+
+// Mobile first mixin
+@mixin viewport-from($breakpoint: '') {
+  
+  @if $breakpoint != '' {
+    @media (min-width: #{map-get($viewport_breakpoints, $breakpoint)}) {
+      @content;
+    }
+  }
+}
+
+// Large screen first mixin
+@mixin viewport-to($breakpoint: '') {
+  
+  @if $breakpoint != '' {
+    @if #{map-get($viewport_breakpoints_max, $breakpoint)} != false {
+      @media (max-width: #{map-get($viewport_breakpoints_max, $breakpoint)}) {
+        @content;
+      }
+    }
+  }
+}
+
+// From and to range mixin
+@mixin viewport-from-to($from: '', $to: '') {
+  
+  @if $from != '' and $to != '' {
+    @if map-get($viewport_breakpoints, $from) == 0 {
+      @media (max-width: #{map-get($viewport_breakpoints, $to) - 1}) {
+        @content;
+      }
+    } @else {
+
+      @media (min-width: #{map-get($viewport_breakpoints, $from)}) and (max-width: #{map-get($viewport_breakpoints, $to) - 1}) {
+        @content;
+      }
+    }
+  }
+}
+
+// Direct range mixin
+@mixin viewport-range($breakpoint) {
+  
+  @if $breakpoint != '' {
+    @if map-get($viewport_breakpoints, $breakpoint) == 0 {
+      @media (max-width: #{map-get($viewport_breakpoints_max, $breakpoint)}) {
+        @content;
+      }
+    } @else {
+
+      @media (min-width: #{map-get($viewport_breakpoints, $breakpoint)}) and (max-width: #{map-get($viewport_breakpoints_max, $breakpoint)}) {
+        @content;
+      }
+    }
+  }
+}
+
+//  Get hover of a color
+/////////////////////////////////////////////////
+@function ns_hover($color) {
+  
+  @if lightness($color) < 15% {
+    $color: lighten($color, 20);
+  } @else if lightness($color) < 30% {
+    $color: lighten($color, 10);
+  } @else if lightness($color) > 80% {
+    $color: darken($color, 5);
+  } @else {
+    $color: adjust_hue(lighten($color, 7), 3);
+  }
+
+  @return $color;
+}
+
+//  Get inverted color based on background
+/////////////////////////////////////////////////
+@function ns_inverted($color, $background, $light_percent: 60%, $dark_percent: 70%) {
+  
+  @if (lightness($background) > $light_percent and lightness($color) > $light_percent) or (lightness($background) < $dark_percent and lightness($color) < $dark_percent) {
+    $color: invert($color);
+  }
+
+  @return $color;
+}

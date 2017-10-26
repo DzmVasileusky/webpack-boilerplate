@@ -1,0 +1,14 @@
+// Include basic
+/////////////////////////////////////////////////
+@import 'basic';
+
+/* Page content
+***********************************************/ 
+.content-fluid {
+  @include ns_content-fluid();
+}
+
+/* Responsive styles for content */
+.content {
+  @include ns_content();
+}

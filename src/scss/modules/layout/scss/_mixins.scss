@@ -1,0 +1,41 @@
+/////////////////////////////////////////////////
+// Layout mixins
+/////////////////////////////////////////////////
+
+// Layout content mixins
+/////////////////////////////////////////////////
+
+// Responsive fixed content
+@mixin ns_content($exclude-paddings: false) {
+  box-sizing: border-box;
+
+  /* Centrify */
+  margin-right: auto;
+  margin-left: auto;
+
+  /* Responsive styles for content */
+  @each $breakpoint, $content-width in $viewport_content-sizes {
+
+    @if $content-width != '100%' {
+      @media (min-width: #{map-get($viewport_breakpoints, $breakpoint)}) {
+
+        @if $exclude-paddings == true {
+          width: $content-width - $grid_gutter;
+        } @else {
+          width: $content-width;
+        }
+      }
+    }
+  }
+}
+
+// Responsive fixed content
+@mixin ns_content-fluid() {
+  margin-right: auto;
+  margin-left: auto;
+
+  @if $content-fluid_max-width != 100% and $content-fluid_max-width != '100%' {
+    /* Maximum width for fluid content */
+    max-width: $content-fluid_max-width;
+  }
+}

@@ -1,0 +1,149 @@
+/*********************************************** 
+  Snippets
+***********************************************/
+
+// Include local config
+/////////////////////////////////////////////////
+@import 'config';
+
+@if $snippets_feature_viewport-visibility == true {
+/* Viewport visibility snippets
+***********************************************/
+  @mixin viewport-visibility($val) {
+    #{$val} {
+      @content;
+    }
+  }
+
+  @each $breakpoint, $media-rule in $viewport-visibility_breakpoints {
+
+    .#{$breakpoint}_visible,
+    .#{$breakpoint}_visible-inline {
+      display: none !important;
+    }
+
+    @media #{$media-rule} {
+      .#{$breakpoint}_visible {
+        display: block !important;
+      }
+
+      .#{$breakpoint}_visible-inline {
+        display: inline-block !important;
+      }
+
+      .#{$breakpoint}_hidden {
+        display: none !important;
+      }
+    }
+  }
+}
+
+@if $snippets_feature_class-indentation == true {
+/* Class indentations snippets
+***********************************************/
+  .mt--0 {
+    margin-top: 0 !important;
+  }
+
+  .pt--0 {
+    margin-top: 0 !important;
+  }
+
+  .ml--0 {
+    margin-left: 0 !important;
+  }
+
+  .pl--0 {
+    margin-left: 0 !important;
+  }
+
+  .mb--0 {
+    margin-bottom: 0 !important;
+  }
+
+  .pb--0 {
+    margin-bottom: 0 !important;
+  }
+
+  .mr--0 {
+    margin-right: 0 !important;
+  }
+
+  .pr--0 {
+    margin-right: 0 !important;
+  }
+
+  .mv--0 {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .pv--0 {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .mh--0 {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .ph--0 {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  @each $indent, $indent-size in $indent_map {
+    .mt--#{$indent} {
+      margin-top: $indent-size !important;
+    }
+
+    .pt--#{$indent} {
+      padding-top: $indent-size !important;
+    }
+
+    .ml--#{$indent} {
+      margin-left: $indent-size !important;
+    }
+
+    .pl--#{$indent} {
+      padding-left: $indent-size !important;
+    }
+
+    .mb--#{$indent} {
+      margin-bottom: $indent-size !important;
+    }
+
+    .pb--#{$indent} {
+      padding-bottom: $indent-size !important;
+    }
+
+    .mr--#{$indent} {
+      margin-right: $indent-size !important;
+    }
+
+    .pr--#{$indent} {
+      padding-right: $indent-size !important;
+    }
+
+    .mv--#{$indent} {
+      margin-top: $indent-size !important;
+      margin-bottom: $indent-size !important;
+    }
+
+    .pv--#{$indent} {
+      padding-top: $indent-size !important;
+      padding-bottom: $indent-size !important;
+    }
+
+    .mh--#{$indent} {
+      margin-left: $indent-size !important;
+      margin-right: $indent-size !important;
+    }
+
+    .ph--#{$indent} {
+      padding-left: $indent-size !important;
+      padding-right: $indent-size !important;
+    }
+  }
+}

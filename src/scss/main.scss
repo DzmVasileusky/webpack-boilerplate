@@ -1,0 +1,40 @@
+/////////////////////////////////////////////////
+// Global scss file
+// There should be included all style files 
+// for compilation
+/////////////////////////////////////////////////
+
+// Config
+/////////////////////////////////////////////////
+@import 'config';
+
+// Modules
+/////////////////////////////////////////////////
+
+// Mixins
+@import 'modules/mixins/scss/basic';
+
+// Print
+@import 'modules/print/scss/basic';
+
+// Reset
+@import 'modules/reset/scss/basic';
+
+// Snippets
+@import 'modules/snippets/scss/basic';
+
+// Layout
+//@import 'modules/layout/scss/basic'; // only mixins and html, body basic styles
+@import 'modules/layout/scss/extended';
+
+// Grid
+// @import 'modules/grid/scss/basic'; // only mixins
+@import 'modules/grid/scss/extended';
+
+// Inputs
+// @import 'modules/form/scss/basic';
+@import 'modules/form/scss/extended';
+
+// App modules
+/////////////////////////////////////////////////
+@import 'app/basic';

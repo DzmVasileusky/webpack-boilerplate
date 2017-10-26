@@ -1,0 +1,88 @@
+/////////////////////////////////////////////////
+// Text input mixins
+/////////////////////////////////////////////////
+
+// Default text input mixin
+/////////////////////////////////////////////////
+@mixin ns_text-input($height: $inputs_height, $padding: $inputs_padding-horizontal, $font-size: $text-input_font-size, $line-height: $text-input_line-height, $border-width: $text-input_border-width, $border-radius: $text-input_border-radius, $font-weight: null, $text-align: $text-input_text-align, $background: $inputs_color_background, $border-color: $inputs_color_border, $color: $inputs_color_foreground) {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border-style: solid;
+  background-image: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  // size styles
+  @include ns_input_size($height, $padding, $font-size, $line-height, $border-width, $border-radius); 
+
+  @at-root {
+    textarea#{&},
+    select[multiple]#{&} {
+      height: auto;
+    }
+  }
+
+  // selectbox fixes
+  @at-root {
+    :not(.ie8) select#{&} {
+      background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAG0lEQVR42mNgwAfKy8v/48I4FeA0AacVDFQBAP9wJkE/KhUMAAAAAElFTkSuQmCC");
+      background-repeat: no-repeat;
+      background-position: right $padding / 2 center;
+    }
+
+    select#{&}::-ms-expand {  
+      display: none; 
+    }
+
+    .ie9 select#{&} {
+      background-image: none;
+    }
+  }
+
+  // text styles
+  @if $font-weight {
+    font-weight: $font-weight;
+  }
+  text-align: $text-align;
+
+  // color styles
+  color: $color;
+  background-color: $background;
+  border-color: $border-color;
+
+  @include placeholder() {
+    color: mix($color, $background, 50%);
+  }
+
+  &:focus {
+    outline: 0;
+    box-shadow: inset 0 0 3px darken($border-color, 10%);
+    border-color: darken($border-color, 10%);
+  }
+  
+  @each $name, $color in $inputs_color_additional {
+    &.#{$name},
+    .#{$name} & {
+      border-color: $color;
+
+      &:focus {
+        box-shadow: inset 0 0 3px $color;
+      }
+    }
+  }
+
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:active,
+    &:focus {
+      cursor: not-allowed;
+      border-color: $border-color;
+      @include opacity(.45);
+    }
+  }
+}

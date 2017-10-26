@@ -1,0 +1,88 @@
+<!doctype html>
+<!--[if lte IE 8]> <html class="no-js ie8"> <![endif]-->
+<!--[if IE 9]> <html class="no-js ie9"> <![endif]-->
+<!--[if gt IE 9]><!--> <html lang=""> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- SITE TITLE AND DESCRIPTION 
+    *********************************************** -->
+    <title>Title</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="robots" content="index,follow">
+
+    <!-- FIXES
+    *********************************************** -->
+    <meta name="format-detection" content="telephone=no">
+
+    <!-- STYLESHEETS
+    *********************************************** -->
+    <!--<link rel="stylesheet" href="../dist/css/critical.min.css">-->
+
+    <!-- FALLBACKS - for IE8 and lesser versions
+    *********************************************** -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/selectivizr/1.0.2/selectivizr-min.js"></script> 
+    <![endif]-->
+    <!--[if lt IE 8 ]>
+      <script type="text/javascript">window.location.href="http://browsehappy.com/";</script>
+    <![endif]-->
+  </head>
+  
+  <body>
+
+    <!-- PAGE WRAPPER
+    *********************************************** -->
+    <div class="page">
+
+      <!-- HEADER
+      *********************************************** -->
+      <header class="header"></header>
+      <!-- *********************************************** 
+      END HEADER -->
+
+      <!-- PAGE CONTENT
+      *********************************************** -->
+      <section class="content"></section>
+      <!-- *********************************************** 
+      END PAGE CONTENT -->
+
+      <!-- FOOTER
+      *********************************************** -->
+      <footer class="footer"></footer>
+      <!-- *********************************************** 
+      END FOOTER -->
+
+    </div>
+    <!-- *********************************************** 
+      END PAGE WRAPPER -->
+
+    <!-- DEFERED STYLES
+    *********************************************** -->
+    <script type="text/javascript">
+      (function() {
+        var link = document.createElement('link'),
+            head = document.head,
+            raf = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+        link.rel = 'stylesheet';
+        link.href = '<%= htmlWebpackPlugin.files.css[0] %>';
+        link.type = 'text/css';
+
+        raf ? raf(function() { head.appendChild(link); }) : window.addEventListener('load', function() { head.appendChild(link); });
+      })();
+    </script>
+
+    <!-- SCRIPTS
+    *********************************************** -->
+
+    <!-- Libs -->
+    <!-- <script src="js/libs/lib.js"></script> -->
+
+    <!-- App -->
+  </body>
+</html>

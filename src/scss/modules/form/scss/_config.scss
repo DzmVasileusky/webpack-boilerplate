@@ -1,0 +1,59 @@
+/////////////////////////////////////////////////
+// Form config
+/////////////////////////////////////////////////
+
+// Features (set true to include and false to exclude)
+$button_default: true;
+$button_outline: true;
+$button_group: true;
+$text-input_default: true;
+$checkbox_default: true;
+$checkbox_filled: true;
+$switch_default: true;
+$switch_doted: true;
+$switch_ios: true;
+$input-group_feature_collapse: true;
+
+// Common colour settings
+$inputs_color_background: $color_bg;
+$inputs_color_border: lighten($color_text, 60%);
+$inputs_color_foreground: $color_text;
+$inputs_color_button-text: #fff;
+$form-label_color: $color_text;
+$inputs_color_primary: $color_brand;
+$inputs_color_additional: $color_additional;
+
+// Defaul input size settings
+$inputs_height: 9 * $unit;
+$inputs_padding-horizontal: $inputs_height * 0.35;
+$form_margin-sm: $indent-mc;
+$form_margin: $indent-xs;
+$form_margin-lg: $indent-sm;
+
+// Buttons
+$button_font-size: 14px;
+$button_border-radius: 0;
+$button_border-width: 0;
+$button_outline_border-width: 2px;
+
+// Text inputs
+$text-input_font-size: 14px;
+$text-input_line-height: $base_line-height * $text-input_font-size;
+$text-input_text-align: left;
+$text-input_border-width: 2px;
+$text-input_border-radius: 0;
+
+// Checkbox and radio
+$checkbox_size: 1.6rem;
+$checkbox_border-width: .2rem;
+$checkbox_border-radius: .2rem;
+$checkbox_font-size: $base_font-size - .2rem;
+$checkbox_line-height: $base_line-height;
+
+// Form label
+$form-label_font-size: 12px;
+$form-label_line-height: 1;
+
+// Form text
+$form-text_font-size: 13px;
+$form-text_line-height: 1;

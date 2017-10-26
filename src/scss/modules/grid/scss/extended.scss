@@ -1,0 +1,165 @@
+/////////////////////////////////////////////////
+// Grid extended
+/////////////////////////////////////////////////
+
+// Include basic
+/////////////////////////////////////////////////
+@import 'basic';
+
+/* Grid wrapper
+***********************************************/
+.grid, 
+.grid-fluid,
+.content,
+.content-fluid {
+  @include ns_grid();
+}
+
+/* Grid rows
+***********************************************/
+.row {
+  @include ns_row();
+}
+
+/* Grid row features
+***********************************************/
+
+// collapse row feature
+@if $grid_feature_row--collapsed == true {
+  /* Collapse row feature */
+  .row--collapse {
+    @include ns_row--collapse();
+  }
+}
+
+// different gutter row feature
+@if $grid_feature_different-gutters == true {
+  /* Different gutter row feature */
+  @each $gutter, $gutter-width in $grid_gutters {
+    .row--gutter-#{$gutter} {
+      @include ns_row--gutter($gutter-width);
+    }
+  }
+
+  // reset gutter
+  .row--gutter-reset {
+    @include ns_row--gutter-reset();
+  }
+}
+
+// vertical gutter row feature
+@if $grid_feature_vertical-gutters == true {
+  /* Vertical gutter row feature */
+  @each $gutter, $gutter-width in $grid_gutters {
+    .row--vertical-gutter-#{$gutter} { 
+      @include ns_row--vertical-gutter($gutter-width);
+    }
+  }
+}
+
+/* Horizontal columns alignment in rows */
+@if $grid_feature_horizontal-alignment == true {
+
+  .row--centered,
+  .row--justified {
+    @include ns_row--flexbox();
+  }
+
+  .row--centered {
+    @include ns_row--centered(false);
+  }
+
+  .row--justified {
+    @include ns_row--justified(false);
+  }
+}
+
+/* Vertical columns alignment in rows */
+@if $grid_feature_vertical-alignment == true {
+  .row--valign-top,
+  .row--valign-bottom,
+  .row--valign-middle,
+  .row--valign-stretch {
+    @include ns_row--flexbox();
+  }
+   
+  .row--valign-top {
+    @include ns_row--valign-top(false);
+  }
+
+  .row--valign-bottom {
+    @include ns_row--valign-bottom(false);
+  }
+
+  .row--valign-middle {
+    @include ns_row--valign-middle(false);
+  }
+
+  .row--valign-stretch {
+    @include ns_row--valign-stretch(false);
+  }
+}
+
+/* Responsive grid row features
+***********************************************/
+@if $grid_feature_responsive == true {
+  @each $breakpoint, $breakpoint-width in $viewport_breakpoints {
+    // exclude the smallest devices
+    @if $breakpoint != 'mc' {
+      $breakpoint-prefix: $breakpoint + '_';
+      @media (min-width: $breakpoint-width) {
+
+        // collapse row feature
+        @if $grid_feature_row--collapsed == true {
+          .#{$breakpoint-prefix}row--collapse {
+            @include ns_row--collapse();
+          }
+        }
+
+        // different gutter row feature
+        @if $grid_feature_different-gutters == true {
+          @each $gutter, $gutter-width in $grid_gutters {
+            .#{$breakpoint-prefix}row--gutter-#{$gutter} {
+              @include ns_row--gutter($gutter-width);
+            }
+          }
+
+          // reset gutter
+          .#{$breakpoint-prefix}row--gutter-reset {
+            @include ns_row--gutter-reset();
+          }
+        }
+
+        // vertical gutter row feature
+        @if $grid_feature_vertical-gutters == true {
+          @each $gutter, $gutter-width in $grid_gutters {
+            .#{$breakpoint-prefix}row--vertical-gutter-#{$gutter} { 
+              @include ns_row--vertical-gutter($gutter-width);
+            }
+          }
+        }
+
+      }
+    }
+  }
+}
+
+/* Grid columns
+***********************************************/
+
+/* common column settings */
+#{$all-cols-selector} {
+  @include ns_col_styles();
+}
+
+/* Grid column features
+***********************************************/
+
+/* cols' width for all screen sizes */
+@if $grid_feature_responsive == true {
+  @each $breakpoint, $breakpoint-width in $viewport_breakpoints {
+    @include ns_cols-for-breakpoint($breakpoint, $breakpoint-width);
+  }
+} @else {
+  @include ns_cols-for-breakpoint('mc', map-get($viewport_breakpoints, 'mc'));
+}

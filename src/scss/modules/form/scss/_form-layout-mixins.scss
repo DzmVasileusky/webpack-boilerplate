@@ -1,0 +1,112 @@
+/////////////////////////////////////////////////
+// Form layout mixing
+/////////////////////////////////////////////////
+
+// Create form label
+/////////////////////////////////////////////////
+@mixin ns_form-label($font-size: $form-label_font-size, $line-height: $form-label_line-height, $color: $form-label_color, $margin-bottom: $form_margin-sm) {
+  display: inline-block;
+  max-width: 100%;
+
+  margin-bottom: $margin-bottom;
+  color: $color;
+  font-size: $font-size;
+  line-height: $line-height;
+
+  // inline behavior
+  .form-inline & {
+    margin-bottom: 0;
+    margin-right: $indent-mc;
+  }
+
+  // horizontal behavior
+  .form-horizontal & {
+    text-align: right;
+    margin-top: ($inputs_height - $font-size * $line-height) / 2;
+  }
+}
+
+// Create form group
+/////////////////////////////////////////////////
+@mixin ns_form-group($margin: $form_margin) {
+  position: relative;
+
+  margin-top: $margin;
+
+  form > &:first-child {
+    margin-top: 0;
+  }
+
+  // inline behavior
+  .form-inline & {
+    display: inline-block;
+    vertical-align: middle;
+
+    margin-top: 0;
+
+    .text-input {
+      display: inline-block;
+      width: auto;
+      vertical-align: middle;
+    }
+  }
+
+  .form-inline & + & {
+    margin-left: $margin;
+  }
+
+  // horizontal behavior
+  .form-horizontal & {
+    @if mixin-exists(ns_row) {
+      @include ns_row();
+    }
+  }
+}
+
+// Create form header
+/////////////////////////////////////////////////
+@mixin ns_form-header($margin: $form_margin-lg) {
+  position: relative;
+
+  margin-bottom: $margin;
+
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6 {
+    margin: 0;
+  }
+}
+
+// Create form footer
+/////////////////////////////////////////////////
+@mixin ns_form-footer($margin: $form_margin-lg) {
+  position: relative;
+
+  margin-top: $margin;
+
+  // horizontal behavior
+  .form-horizontal & {
+    @if mixin-exists(ns_row) {
+      @include ns_row();
+    }
+  }
+}
+
+// Create form text
+/////////////////////////////////////////////////
+@mixin ns_form-text($font-size: $form-label_font-size, $line-height: $form-label_line-height, $color: $inputs_color_foreground, $margin-top:  $form_margin-sm) {
+  max-width: 100%;
+  margin-top: $margin-top;
+
+  color: $color;
+
+  font-size: $font-size;
+  line-height: $line-height;
+
+  // inline behavior
+  .form-inline & {
+    display: inline-block;
+    vertical-align: middle;
+    
+    margin-top: 0;
+  }
+}

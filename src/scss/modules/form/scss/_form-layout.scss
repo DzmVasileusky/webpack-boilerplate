@@ -1,0 +1,37 @@
+/*********************************************** 
+  Form layout
+***********************************************/
+
+// Mixins
+/////////////////////////////////////////////////
+@import 'form-layout-mixins';
+
+/* Form label
+***********************************************/
+.form-label {
+  @include ns_form-label();
+}
+
+/* Form group
+***********************************************/
+.form-group {
+  @include ns_form-group();
+}
+
+/* Form header
+***********************************************/
+.form-header {
+  @include ns_form-header();
+}
+
+/* Form footer
+***********************************************/
+.form-footer {
+  @include ns_form-footer();
+}
+
+/* Form text
+***********************************************/
+.form-text {
+  @include ns_form-text();
+}
